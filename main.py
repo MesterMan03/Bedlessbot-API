@@ -26,10 +26,17 @@ def root():
     global shared_secret
 
     # Check for secret key in Authorization header
-    auth_header = request.headers.get("Authorization")
-    if auth_header is None or auth_header != shared_secret:
+    try:
+        auth_header = request.headers.get("Authorization")
+        if auth_header is None or binascii.unhexlify(auth_header) != shared_secret:
+            ip_address = request.remote_addr
+            logging.error(f"Authorization header missing from IP address: {ip_address}")
+            return "Authorization header missing or invalid", 401
+    except Exception as e:
         ip_address = request.remote_addr
-        logging.error(f"Authorization header missing from IP address: {ip_address}")
+        logging.error(
+            f"Failed to validate Authorization header from IP address: {ip_address}. Error: {str(e)}"
+        )
         return "Authorization header missing or invalid", 401
 
     # Retrieve data from the request body
