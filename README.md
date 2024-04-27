@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 4. **Configure the secret**:
 
-You need to create a `secret` file of arbitrary data which the clients will have to provide in the Authorization header in hex format. You can use the following command to generate a random secret:
+You need to create a `secret` file of arbitrary data represented as hex which the clients will have to provide in the Authorization header. You can use the following command to generate a random secret:
 
 ```bash
 python -c "import secrets; print(secrets.token_hex(64))"
@@ -34,13 +34,13 @@ python -c "import secrets; print(secrets.token_hex(64))"
 
 This will generate a 64-byte hex string which you can use as the secret. Save this string in a file named `secret` in the root directory of the project. You may use more or less bytes as needed.
 
-1. **Start the API**:
+## Usage
+
+-   **Start the API**:
 
 ```bash
 python main.py
 ```
-
-## Usage
 
 -   **API Endpoints**:
     -   POST `/`: The main endpoint for the API. This endpoint requires the `Authorization` header with the secret as the value. The body is expected to be a JSON object with the following keys:
