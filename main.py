@@ -48,7 +48,7 @@ def root():
         # Run the search
         try:
             answer = st.search(text)
-            if answer == None:
+            if answer is None:
                 return jsonify({"answer": "No answer found"}), 204
             if answer:
                 return jsonify({"answer": answer[1]})
